@@ -306,7 +306,11 @@ function TagsSelector(
     if (tagsText === '' || !tagsText.trim().length) {
       return;
     }
-    const tagsArray = tagsText.split(/\s*,\s*|\s+/).filter(Boolean);
+    // Split by comma first, then by whitespace - avoids regex backtracking (SonarCloud S5852)
+    const tagsArray = tagsText
+      .split(/\s*,\s*/)
+      .flatMap((tag) => tag.trim().split(/\s+/))
+      .filter(Boolean);
     const uniqueArray = [...new Set([...tags, ...tagsArray])];
     setTags(uniqueArray);
     setTagsText('');
