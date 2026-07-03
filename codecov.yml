@@ -17,3 +17,7 @@ coverage:
     - "**/swagger.json"
     - "**/openapi.json"
     - "**/package-lock.json"
+
+flags:
+  unit-tests:
+    carryforward: true
