@@ -64,4 +64,29 @@ describe('RuleForm', () => {
 
     expect(screen.getByText('Schedule ending type')).toBeInTheDocument();
   });
+
+  it('should render Occurrences field with updated tooltip', () => {
+    render(
+      <TestWrapper>
+        <RuleForm title={ruleFormTitle} isOpen={false} setIsOpen={() => {}} />
+      </TestWrapper>
+    );
+
+    expect(screen.getByText('Occurrences')).toBeInTheDocument();
+  });
+
+  it('should have clear tooltip text for Occurrences field without iCalendar RFC reference', () => {
+    render(
+      <TestWrapper>
+        <RuleForm title={ruleFormTitle} isOpen={false} setIsOpen={() => {}} />
+      </TestWrapper>
+    );
+
+    const occurrencesLabel = screen.getByText('Occurrences');
+    expect(occurrencesLabel).toBeInTheDocument();
+
+    // Verify the old confusing text is NOT present
+    expect(screen.queryByText(/iCalendar RFC/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/bysetpos field/i)).not.toBeInTheDocument();
+  });
 });
